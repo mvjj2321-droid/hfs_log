@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login Status</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    background:#222;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    width:320px;
+}
+
+.status{
+    margin-top:20px;
+    font-size:24px;
+    color:#4CAF50;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+    <h2>HF Status</h2>
+
+    <div class="status" id="status">
+        Connecting...
+    </div>
+</div>
+
+<script>
+
+// Replace with your HF Space URL
+const API =
+"https://YOUR_USERNAME-YOUR_SPACE.hf.space/status";
+
+fetch(API,{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        user:"Jason"
+    })
+})
+.then(r=>r.json())
+.then(data=>{
+    document.getElementById("status").innerHTML =
+        data.user + " is " + data.status;
+})
+.catch(()=>{
+    document.getElementById("status").innerHTML =
+        "Offline";
+});
+
+</script>
+
+</body>
+</html>
