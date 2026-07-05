@@ -48,20 +48,19 @@ body{
 const API =
 "https://movajao-userlog.hf.space/status";
 
-fetch(API,{
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
+fetch("https://movajao-userlog.hf.space/status", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
     },
-    body:JSON.stringify({
-        user:"Jason"
+    body: JSON.stringify({
+        user: "Jason"
     })
 })
-.then(r=>r.json())
-.then(data=>{
-    document.getElementById("status").innerHTML =
-        data.user + " is " + data.status;
-})
+.then(async r=>{
+    const text = await r.text();
+    console.log(text);
+});
 .catch(()=>{
     document.getElementById("status").innerHTML =
         "Offline";
