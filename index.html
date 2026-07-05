@@ -1,33 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<title>Login Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Login</title>
 
 <style>
+
 body{
-    font-family:Arial;
+    margin:0;
     background:#111;
     color:white;
     display:flex;
     justify-content:center;
     align-items:center;
     height:100vh;
+    font-family:Arial;
 }
 
 .card{
-    background:#222;
+    width:350px;
+    background:#1d1d1d;
     padding:30px;
-    border-radius:12px;
+    border-radius:15px;
     text-align:center;
-    width:320px;
+    box-shadow:0 0 25px rgba(0,255,0,.15);
 }
 
-.status{
-    margin-top:20px;
-    font-size:24px;
-    color:#4CAF50;
+h1{
+    margin-top:0;
 }
+
+#status{
+    font-size:22px;
+    color:#00ff66;
+    margin-top:20px;
+}
+
 </style>
 
 </head>
@@ -35,36 +46,46 @@ body{
 <body>
 
 <div class="card">
-    <h2>HF Status</h2>
 
-    <div class="status" id="status">
-        Connecting...
-    </div>
+<h1>HF Login</h1>
+
+<div id="status">
+Connecting...
 </div>
 
-<script>
+</div>
 
-// Replace with your HF Space URL
-const API =
-"https://movajao-userlog.hf.space/status";
+<script type="module">
 
-fetch("https://movajao-userlog.hf.space/status", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        user: "Jason"
-    })
-})
-.then(async r=>{
-    const text = await r.text();
-    console.log(text);
-});
-.catch(()=>{
-    document.getElementById("status").innerHTML =
-        "Offline";
-});
+import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+
+const status = document.getElementById("status");
+
+async function login(){
+
+    try{
+
+        const app = await Client.connect("Movajao/Userlog");
+
+        await app.predict("/login",{
+            name:"Jason"
+        });
+
+        status.innerHTML="✅ Jason Logged In";
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        status.innerHTML="❌ Failed";
+
+    }
+
+}
+
+login();
 
 </script>
 
